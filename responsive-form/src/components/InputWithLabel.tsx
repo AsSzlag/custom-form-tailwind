@@ -1,14 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
+import errorIcon from '../assets/errorIcon.svg'
 
 interface InputWithLabelProps {
   name: string;
+  type?: string;
 }
 
-const InputWithLabel = ({name}: InputWithLabelProps) => {
+const InputWithLabel = ({ name, type }: InputWithLabelProps) => {
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
+  const validateInput = (value: string) => {
+    // email regex from internet
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    switch (type) {
+      case 'email':
+        if (!emailRegex.test(value)) {
+          setError('Please use correct formatting. Example: address@email.com');
+        } else {
+          setError('');
+        }
+        break;
+
+      default:
+        if (!value.trim()) {
+          setError(`${name} is required`);
+        } else {
+          setError('');
+        }
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setValue(newValue);
+    validateInput(newValue);
+  };
+
   return (
-    <div>
-      <label htmlFor={name} className="block">{name}</label>
-      <input type="text" id={name} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required />
+    <div className='mb-6 w-full'>
+      <label htmlFor={name} className="block font-normal text-main text-sm font-main ">{name}</label>
+      <input type="text" id={name} value={value} onChange={handleInputChange}
+        className={` w-[100%] p-2.5 box-border bg-white border border-border font-normal text-main text-sm font-main rounded-lg  active:border-2 focus-visible:outline-primary block h-[48px]
+  ${error && 'border-errror border-2'}`}
+        required />
+      {error && <p className="mt-1 text-sm text-red-500">  <img src={errorIcon} alt="error" className="w-4 h-4 inline-block" /> {error}</p>}
     </div>
   )
 }
