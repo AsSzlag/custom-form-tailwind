@@ -3,10 +3,12 @@ import errorIcon from '../assets/errorIcon.svg'
 
 interface InputWithLabelProps {
   name: string;
+  title: string;
   type?: string;
+  onChange: (name: string, value: string) => void;
 }
 
-const InputWithLabel = ({ name, type }: InputWithLabelProps) => {
+const InputWithLabel = ({ name, title, type, onChange }: InputWithLabelProps) => {
   const [value, setValue] = useState<string>('');
   const [error, setError] = useState<string>('');
 
@@ -35,11 +37,12 @@ const InputWithLabel = ({ name, type }: InputWithLabelProps) => {
     const newValue = e.target.value;
     setValue(newValue);
     validateInput(newValue);
+    onChange(name, newValue);
   };
 
   return (
     <div className='mb-6 w-full'>
-      <label htmlFor={name} className="block font-normal text-main text-sm font-main ">{name}</label>
+      <label htmlFor={name} className="block font-normal text-main text-sm font-main ">{title}</label>
       <input type="text" id={name} value={value} onChange={handleInputChange}
         className={` w-[100%] p-2.5 box-border bg-white border border-border font-normal text-main text-sm font-main rounded-lg  active:border-2 focus-visible:outline-primary block h-[48px]
   ${error && 'border-errror border-2'}`}
