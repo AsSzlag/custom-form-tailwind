@@ -1,0 +1,284 @@
+@use "sass:color";
+
+/*I know it is ugly, but I have to those to style the calendar I merge couple od required files into one. Also I have to use SCSS.*/
+
+$datepicker__background-color: #f0f0f0 !default;
+$datepicker__border-color: #aeaeae !default;
+$datepicker__highlighted-color: #3dcc4a !default;
+$datepicker__holidays-color: #ff6803 !default;
+$datepicker__muted-color: #CBB6E5 !default;
+$datepicker__selected-color: #216ba5 !default;
+$datepicker__text-color: #000 !default;
+$datepicker__header-color: #000 !default;
+$datepicker__navigation-disabled-color: color.adjust(
+  $datepicker__muted-color,
+  $lightness: 10%
+) !default;
+$datepicker__border-radius: 0.3rem !default;
+$datepicker__day-margin: 0.166rem !default;
+$datepicker__font-size: 0.8rem !default;
+$datepicker__font-family: "Helvetica Neue", helvetica, arial, sans-serif !default;
+$datepicker__item-size: 1.7rem !default;
+$datepicker__margin: 0.4rem !default;
+$datepicker__navigation-button-size: 32px !default;
+
+%navigation-chevron {
+  border-color: $datepicker__muted-color;
+  border-style: solid;
+  border-width: 3px 3px 0 0;
+  content: "";
+  display: block;
+  height: 9px;
+  position: absolute;
+  top: 6px;
+  width: 9px;
+
+  &--disabled,
+  &--disabled:hover {
+    border-color: $datepicker__navigation-disabled-color;
+    cursor: default;
+  }
+}
+
+.react-datepicker {
+  font-family: 'Inter', 'sans-serif';
+  background-color: #fff;
+  width: 100%;
+  color: #000853;
+  border: 1px solid #CBB6E5;
+  border-radius: $datepicker__border-radius;
+  display: inline-block;
+  position: relative;
+}
+
+
+.react-datepicker__header {
+  text-align: center;
+  background-color: white;
+  border-top-left-radius: $datepicker__border-radius;
+  border-top-right-radius: $datepicker__border-radius;
+  padding: 8px 0;
+  position: relative;
+}
+
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  margin-top: 0;
+  color: $datepicker__header-color;
+  font-family: 'Inter', 'sans-serif';
+  font-size: 1rem;
+}
+
+
+
+
+.react-datepicker__navigation {
+  align-items: center;
+  background: none;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  padding: 0;
+  border: none;
+  z-index: 1;
+  height: $datepicker__navigation-button-size;
+  width: $datepicker__navigation-button-size;
+  text-indent: -999em;
+  overflow: hidden;
+
+  &--previous {
+    left: 2px;
+  }
+
+  &--next {
+    right: 2px;
+
+    &--with-time:not(&--with-today-button) {
+      right: 85px;
+    }
+  }
+
+  &:hover {
+    *::before {
+      border-color: #761BE4;
+    }
+  }
+}
+
+.react-datepicker__navigation-icon {
+  position: relative;
+  top: -1px;
+  font-size: 20px;
+  width: 0;
+
+  &::before {
+    @extend %navigation-chevron;
+  }
+
+  &--next {
+    left: -2px;
+
+    &::before {
+      transform: rotate(45deg);
+      left: -7px;
+    }
+  }
+
+  &--previous {
+    right: -2px;
+
+    &::before {
+      transform: rotate(225deg);
+      right: -7px;
+    }
+  }
+}
+
+.react-datepicker__month {
+  margin: $datepicker__margin;
+  text-align: center;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  color: $datepicker__text-color;
+  display: inline-block;
+  width: $datepicker__item-size;
+  line-height: $datepicker__item-size;
+  text-align: center;
+  margin: $datepicker__day-margin;
+}
+
+.react-datepicker__day,
+.react-datepicker__month-text,
+.react-datepicker__quarter-text,
+.react-datepicker__year-text {
+  cursor: pointer;
+
+  &:not([aria-disabled="true"]):hover {
+    border-radius: $datepicker__border-radius;
+    background-color: $datepicker__background-color;
+  }
+
+  &--today {
+    font-weight: bold;
+  }
+
+  &--highlighted {
+    border-radius: $datepicker__border-radius;
+    background: #761BE4;
+    color: #fff;
+
+    &:not([aria-disabled="true"]):hover {
+      background: #761BE4;
+
+    }
+  }
+
+  &--holidays {
+    position: relative;
+    border-radius: $datepicker__border-radius;
+    background-color: $datepicker__holidays-color;
+    color: #fff;
+
+    .overlay {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: #fff;
+      padding: 4px;
+      border-radius: 4px;
+      white-space: nowrap;
+      visibility: hidden;
+      opacity: 0;
+      transition:
+        visibility 0s,
+        opacity 0.3s ease-in-out;
+    }
+
+    &:not([aria-disabled="true"]):hover {
+      background: #761BE4;
+    }
+
+    &:hover .overlay {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &--selected,
+  &--in-selecting-range,
+  &--in-range {
+    border-radius: $datepicker__border-radius;
+    background: #761BE4;
+    color: #fff;
+
+    &:not([aria-disabled="true"]):hover {
+      background: #761BE4;
+    }
+  }
+
+  &--keyboard-selected {
+    border-radius: $datepicker__border-radius;
+    background: #761BE4;
+    color: rgb(0, 0, 0);
+
+    &:not([aria-disabled="true"]):hover {
+      background: #761BE4;
+    }
+  }
+
+  &--in-selecting-range:not(&--in-range) {
+    background-color: rgba($datepicker__selected-color, 0.5);
+  }
+
+  &--in-range:not(&--in-selecting-range) {
+    .react-datepicker__month--selecting-range &,
+    .react-datepicker__year--selecting-range & {
+      background-color: $datepicker__background-color;
+      color: $datepicker__text-color;
+    }
+  }
+
+  &--disabled {
+    cursor: default;
+    color: $datepicker__muted-color;
+
+    .overlay {
+      position: absolute;
+      bottom: 70%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: #fff;
+      padding: 4px;
+      border-radius: 4px;
+      white-space: nowrap;
+      visibility: hidden;
+      opacity: 0;
+      transition:
+        visibility 0s,
+        opacity 0.3s ease-in-out;
+    }
+  }
+}
+
+.react-datepicker__aria-live {
+  position: absolute;
+  clip-path: circle(0);
+  border: 0;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  width: 1px;
+  white-space: nowrap;
+}
