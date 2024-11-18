@@ -13,7 +13,7 @@ interface FormDataProps {
   [key: string]: string;
 }
 
-interface Holiday {
+export interface Holiday {
   name: string;
   date: string;
   iso: string;
@@ -23,12 +23,14 @@ interface Holiday {
 }
 
 function App() {
+  //I've created this to store data in one object, so it's easier to send to backend
   const [formData, setFormData] = useState<FormDataProps>({
     firstName: "",
     lastName: "",
     email: "",
     age: "",
     photo: "",
+    date: "",
   });
   const [holidays, setHolidays] = useState<Holiday[]>([]);
   const [isLoading, setIsLoading] = useState(false);

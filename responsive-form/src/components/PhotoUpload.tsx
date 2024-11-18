@@ -31,9 +31,9 @@ const PhotoUpload = ({name, title, onChange}: PhotoUploadProps) => {
       <div className="text-main font-main text-sm self-start">{title}</div>
     <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-24 border-2 border-border rounded-lg cursor-pointer bg-white">
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
-        {file ? <div onClick={resetFile} >{file} <img src={deleteIcon} alt="error" className="w-4 h-4 inline-block" /></div> : <p className=" text-sm text-primary underline font-main">Upload a file</p>}
+        {file ? <div className='mt-[30px]' onClick={resetFile} >{file} <img src={deleteIcon} alt="error" className="w-4 h-4 inline-block " /></div> : <p className=" text-sm text-primary underline font-main mt-[30px]">Upload a file</p>}
         </div>
-        <input id="dropzone-file" type="file" className="hidden" onChange={handleChange} required/>
+        <input name={'dropzone-file'} id="dropzone-file" type="file" className="opacity-0" onChange={handleChange} required/>
         
     </label>
 </div> 
